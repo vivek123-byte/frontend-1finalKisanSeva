@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Farmer Review</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f2f9f2;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #33691e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px;
+      border: 2px solid #33691e;
+      border-radius: 10px;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    p {
+      margin: 10px 0;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+    }
+    input[type="file"] {
+      margin-top: 10px;
+    }
+    button {
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .approved {
+      display: none;
+      text-align: center;
+      font-size: 22px;
+      color: green;
+      margin-top: 30px;
+      animation: fadeIn 2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .tick {
+      font-size: 50px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Contract Review - Farmer</h2>
+  </header>
+
+  <div class="container">
+    <div id="contractDetails"></div>
+
+    <label>Upload Farmer's Signature:</label>
+    <input type="file" id="farmerSignature" accept="image/*" required />
+
+    <button onclick="approveContract()">Approve Contract</button>
+
+    <div class="approved" id="approvedMsg">
+      <div class="tick">✔</div>
+      Contract Approved!
+    </div>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem('contractData'));
+    const contractDetails = document.getElementById('contractDetails');
+    if (!data) window.location.href = 'contract-form.html';
+
+    contractDetails.innerHTML = `
+      <h3>Buyer: ${data.buyerName}</h3>
+      <p><strong>Farmer:</strong> ${data.farmerName}</p>
+      <p><strong>Crop:</strong> ${data.crop}</p>
+      <p><strong>Price:</strong> ₹${data.price} / quintal</p>
+      <p><strong>Agreement Date:</strong> ${data.agreementDate || 'N/A'}</p>
+      <p><strong>Delivery Date:</strong> ${data.deliveryDate || 'N/A'}</p>
+      <p><strong>Terms:</strong> ${data.terms}</p>
+      <p><strong>Buyer's Signature:</strong><br><img src="${data.buyerSignature}" height="100" /></p>
+    `;
+
+    function approveContract() {
+      const farmerSig = document.getElementById('farmerSignature').files[0];
+      if (!farmerSig) return alert("Upload farmer's signature!");
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        data.farmerSignature = reader.result;
+        localStorage.setItem('contractData', JSON.stringify(data));
+        document.getElementById('approvedMsg').style.display = 'block';
+        setTimeout(() => window.location.href = 'contract-final.html', 2000);
+      };
+      reader.readAsDataURL(farmerSig);
+    }
+  </script>
+</body>
+</html>

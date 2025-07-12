@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Farmers' Crop Sale Agreement - Government of India</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      font-size: 12pt;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 3px solid #00264d;
+    }
+    header h2 {
+      font-size: 20pt;
+      margin: 0;
+    }
+    header p {
+      font-size: 12pt;
+      margin: 3px 0;
+    }
+    .container {
+      width: 85%;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .title {
+      font-size: 18pt;
+      margin: 0 0 15px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: underline;
+    }
+    .details p, .legal-clause p {
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    .legal-clause {
+      margin: 15px 0;
+      padding-left: 10px;
+      border-left: 3px solid #003366;
+    }
+    .legal-clause h4 {
+      margin: 0 0 5px;
+      text-decoration: underline;
+    }
+    .signature-section {
+      display: flex;
+      justify-content: space-around;
+      margin: 15px 0;
+      font-size: 10pt;
+    }
+    .signature-block {
+      text-align: center;
+    }
+    .signature-img {
+      width: 150px;
+      height: 60px;
+      /* border: 1px solid #000; */
+      margin: 40px auto;
+      object-fit: contain;
+      transform: rotate(90deg);
+    }
+    .approved {
+      margin: 15px 0;
+      font-size: 14pt;
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+    .buttons {
+      text-align: center;
+      margin: 15px 0;
+    }
+    button {
+      background-color: #003366;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 10pt;
+    }
+    button:hover {
+      background-color: #1a237e;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-size: 10pt;
+    }
+    .seal {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #003366;
+      border-radius: 50%;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Emblem_of_India.svg/50px-Emblem_of_India.svg.png');
+      background-size: contain;
+      margin: 5px auto;
+    }
+    @media print {
+      .buttons, footer { display: none; }
+      body { background: white; }
+      .container { margin: 0; box-shadow: none; border: none; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Government of India</h2>
+    <p><strong>Ministry of Agriculture and Farmers Welfare</strong></p>
+  </header>
+
+  <div class="container">
+    <div class="title">Farmers' Crop Sale Agreement Contract</div>
+
+    <div class="details">
+      <p><strong>Contract Number:</strong> <span id="contractNumber">N/A</span></p>
+      <p><strong>Buyer:</strong> <span id="buyerName">N/A</span></p>
+      <p><strong>Farmer:</strong> <span id="farmerName">N/A</span></p>
+      <p><strong>Crop:</strong> <span id="cropName">N/A</span></p>
+      <p><strong>Price:</strong> ₹<span id="price">0</span> / kg</p>
+      <p><strong>Agreement Date:</strong> <span id="agreementDate">N/A</span></p>
+      <p><strong>Delivery Date:</strong> <span id="deliveryDate">N/A</span></p>
+      <p><strong>Terms & Conditions:</strong> <span id="terms">N/A</span></p>
+    </div>
+
+    <div class="legal-clause">
+      <h4>Clause 1: Purpose of the Agreement</h4>
+      <p>This agreement, effective as of <span id="agreementDateClause1">N/A</span>, is made between the Buyer and the Farmer for the purchase and sale of the crop named <strong><span id="cropClause1">N/A</span></strong>. Both parties agree to adhere to the terms and conditions listed in this agreement.</p>
+    </div>
+
+    <div class="legal-clause">
+      <h4>Clause 2: Delivery and Payment</h4>
+      <p>The Buyer agrees to make the payment of ₹<span id="priceClause2">0</span> per quintal within 15 days after receiving the crop. The Farmer agrees to deliver the crop by <span id="deliveryDateClause2">N/A</span>.</p>
+    </div>
+
+    <div class="signature-section">
+      <div class="signature-block">
+        <h4>Buyer's Signature</h4>
+        <img id="buyerSignature" class="signature-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Buyer Signature" />
+        <p>✔ Verified by the Buyer</p>
+      </div>
+      <div class="signature-block">
+        <h4>Farmer's Signature</h4>
+        <img id="farmerSignature" class="signature-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Farmer Signature" />
+        <p>✔ Verified by the Farmer</p>
+      </div>
+    </div>
+
+    <div class="approved">Contract Approved and Finalized</div>
+
+    <div class="buttons">
+      <button onclick="printContract()">Print Contract</button>
+      <button onclick="downloadContract()">Download Contract</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="seal"></div>
+    <p>© 2025 Ministry of Agriculture and Farmers Welfare, Government of India</p>
+  </footer>
+
+  <script>
+    function loadContractData() {
+      const data = JSON.parse(localStorage.getItem('contractData')) || {};
+      document.getElementById('contractNumber').textContent = data.contractNumber || 'N/A';
+      document.getElementById('buyerName').textContent = data.buyerName || 'N/A';
+      document.getElementById('farmerName').textContent = data.farmerName || 'N/A';
+      document.getElementById('cropName').textContent = data.crop || 'N/A';
+      document.getElementById('cropClause1').textContent = data.crop || 'N/A';
+      document.getElementById('price').textContent = data.price || '0';
+      document.getElementById('priceClause2').textContent = data.price || '0';
+      document.getElementById('agreementDate').textContent = data.agreementDate || 'N/A';
+      document.getElementById('agreementDateClause1').textContent = data.agreementDate || 'N/A';
+      document.getElementById('deliveryDate').textContent = data.deliveryDate || 'N/A';
+      document.getElementById('deliveryDateClause2').textContent = data.deliveryDate || 'N/A';
+      document.getElementById('terms').textContent = data.terms || 'N/A';
+      document.getElementById('buyerSignature').src = data.buyerSignature || document.getElementById('buyerSignature').src;
+      document.getElementById('farmerSignature').src = data.farmerSignature || document.getElementById('farmerSignature').src;
+    }
+
+    function printContract() {
+      window.print();
+    }
+
+    function downloadContract() {
+      const content = `
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <title>Farmers' Crop Sale Agreement</title>
+            <style>
+              body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; }
+              .container { width: 85%; max-width: 800px; margin: 20px auto; }
+              .title { font-size: 18pt; font-weight: bold; text-align: center; text-decoration: underline; }
+              .details p, .legal-clause p { margin: 8px 0; line-height: 1.4; }
+              .legal-clause { margin: 15px 0; padding-left: 10px; border-left: 3px solid #003366; }
+              .legal-clause h4 { margin: 0 0 5px; text-decoration: underline; }
+              .signature-section { display: flex; justify-content: space-around; font-size: 10pt; }
+              .signature-block { text-align: center; }
+              .signature-img { width: 150px; height: 60px; object-fit: contain; transform: rotate(90deg); }
+              .approved { margin: 15px 0; font-size: 14pt; color: green; text-align: center; font-weight: bold; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="title">Farmers' Crop Sale Agreement Contract</div>
+              ${document.querySelector('.details').outerHTML}
+              ${document.querySelectorAll('.legal-clause')[0].outerHTML}
+              ${document.querySelectorAll('.legal-clause')[1].outerHTML}
+              ${document.querySelector('.signature-section').outerHTML}
+              ${document.querySelector('.approved').outerHTML}
+            </div>
+          </body>
+        </html>`;
+      const blob = new Blob([content], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Farmers_Crop_Sale_Agreement.doc';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    window.onload = loadContractData;
+  </script>
+</body>
+</html>

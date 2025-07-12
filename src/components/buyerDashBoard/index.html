@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Crop Search - Government Portal</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* Header */
+        .header {
+            background: #002366;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .header img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background: white;
+            padding: 15px;
+            border-right: 3px solid #ddd;
+            overflow-y: auto;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #002366;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Farmer List */
+        .farmer-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .farmer-list li {
+            background: #e7f0ff;
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            border-left: 5px solid #002366;
+            font-weight: bold;
+        }
+        .farmer-list li:hover {
+            background: #ccd9ff;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            position: relative;
+        }
+        .farmer-details {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 5px solid #002366;
+            border-radius: 5px;
+        }
+        .message-btn {
+            background: #002366;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .message-btn:hover {
+            background: #0046b5;
+        }
+
+        /* Chat Box */
+        .chat-box {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            width: 300px;
+            background: white;
+            border: 2px solid #002366;
+            border-radius: 10px;
+        }
+        .chat-header {
+            background: #002366;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+        }
+        .chat-input button {
+            padding: 10px;
+            border: none;
+            background: #002366;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="download.png" alt="Gov Logo">
+        <span>Government of India - Farmer Buyer Portal</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <input type="text" id="searchBar" placeholder="Search crop (e.g. Wheat, Rice, Corn)">
+            <ul id="farmerList" class="farmer-list"></ul>
+        </div>
+
+        <!-- Farmer Details -->
+        <div class="content">
+            <h2>Farmer Details</h2>
+            <div id="farmerDetails" class="farmer-details">
+                <p>Select a farmer to view details.</p>
+            </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div id="chatBox" class="chat-box">
+            <div class="chat-header">Chat with Farmer</div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy Farmers Data
+        const farmersData = [
+            { name: "Rahul Kumar", crop: "Wheat", location: "Punjab", price: "₹1500/quintal", contact: "9876543210" },
+            { name: "Amit Singh", crop: "Rice", location: "Bihar", price: "₹2000/quintal", contact: "9876543211" },
+            { name: "Suresh Verma", crop: "Corn", location: "MP", price: "₹1200/quintal", contact: "9876543212" },
+            { name: "Vikas Yadav", crop: "Wheat", location: "Haryana", price: "₹1550/quintal", contact: "9876543213" },
+            { name: "Anil Sharma", crop: "Sugarcane", location: "UP", price: "₹1800/quintal", contact: "9876543214" },
+            { name: "Manoj Patel", crop: "Soybean", location: "Maharashtra", price: "₹2500/quintal", contact: "9876543215" }
+        ];
+
+        const farmerList = document.getElementById("farmerList");
+        const searchBar = document.getElementById("searchBar");
+
+        function displayFarmers(filteredFarmers) {
+            farmerList.innerHTML = "";
+            filteredFarmers.forEach(farmer => {
+                let listItem = document.createElement("li");
+                listItem.textContent = `${farmer.name} (${farmer.location})`;
+                listItem.addEventListener("click", function () {
+                    displayFarmerDetails(farmer);
+                });
+                farmerList.appendChild(listItem);
+            });
+        }
+
+        function displayFarmerDetails(farmer) {
+            document.getElementById("farmerDetails").innerHTML = `
+                <h3>${farmer.name}</h3>
+                <p><strong>Crop:</strong> ${farmer.crop}</p>
+                <p><strong>Location:</strong> ${farmer.location}</p>
+                <p><strong>Price:</strong> ${farmer.price}</p>
+                <p><strong>Contact:</strong> ${farmer.contact}</p>
+                <button class="message-btn" onclick="openChat('${farmer.name}')">Message</button>
+            `;
+        }
+
+        function openChat(farmerName) {
+            document.getElementById("chatBox").style.display = "block";
+            document.getElementById("chatMessages").innerHTML = `<p>Chat started with ${farmerName}</p>`;
+        }
+
+        function sendMessage() {
+            let msg = document.getElementById("chatInput").value;
+            if (msg) {
+                document.getElementById("chatMessages").innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
+                document.getElementById("chatInput").value = "";
+            }
+        }
+
+        searchBar.addEventListener("input", function () {
+            displayFarmers(farmersData.filter(farmer => farmer.crop.toLowerCase().includes(searchBar.value.toLowerCase())));
+        });
+
+        window.onload = function () { displayFarmers(farmersData); };
+    </script>
+
+</body>
+</html>

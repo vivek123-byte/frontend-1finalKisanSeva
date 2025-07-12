@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contract Form - Buyer - Government of India</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #e6f2ff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    header p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    form {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border: 2px solid #003366;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    input, textarea {
+      width: 100%;
+      margin-top: 5px;
+      padding: 10px;
+      border: 1px solid #888;
+      border-radius: 5px;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    input[type="date"] {
+      padding: 8px;
+    }
+    input:invalid:focus, textarea:invalid:focus {
+      border-color: #ff4444;
+      box-shadow: 0 0 3px #ff4444;
+    }
+    .required::after {
+      content: " *";
+      color: #ff4444;
+    }
+    button {
+      background-color: #003366;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #002244;
+    }
+    .error {
+      color: #ff4444;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+    @media (max-width: 600px) {
+      form {
+        margin: 15px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Ministry of Agriculture and Farmers Welfare</h2>
+    <p>Contract Agreement Portal - Buyer Section</p>
+  </header>
+
+  <form id="contractForm" novalidate>
+    <label class="required" for="buyerName">Buyer Name:</label>
+    <input type="text" id="buyerName" required placeholder="Enter your full name" />
+
+    <label class="required" for="farmerName">Farmer Name:</label>
+    <input type="text" id="farmerName" required placeholder="Enter farmer's full name" />
+
+    <label class="required" for="crop">Crop:</label>
+    <input type="text" id="crop" required placeholder="e.g., Wheat, Rice" />
+
+    <label class="required" for="price">Price (per quintal):</label>
+    <input type="number" id="price" required min="1" step="1" placeholder="Enter price in ₹" />
+    <div id="priceError" class="error">Price must be a positive number.</div>
+
+    <label class="required" for="agreementDate">Agreement Date:</label>
+    <input type="date" id="agreementDate" required />
+    <div id="agreementDateError" class="error">Agreement date cannot be in the past.</div>
+
+    <label class="required" for="deliveryDate">Delivery Date:</label>
+    <input type="date" id="deliveryDate" required />
+    <div id="deliveryDateError" class="error">Delivery date must be after agreement date.</div>
+
+    <label class="required" for="terms">Terms & Conditions:</label>
+    <textarea id="terms" rows="5" required placeholder="Specify payment terms, delivery, etc."></textarea>
+
+    <label class="required" for="buyerSignature">Upload Buyer's Signature:</label>
+    <input type="file" id="buyerSignature" accept="image/*" required />
+    <div id="signatureError" class="error">Please upload a valid image file.</div>
+
+    <button type="submit">Send to Farmer</button>
+  </form>
+
+  <script>
+    document.getElementById('contractForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const buyerName = document.getElementById('buyerName').value.trim();
+      const farmerName = document.getElementById('farmerName').value.trim();
+      const crop = document.getElementById('crop').value.trim();
+      const price = document.getElementById('price').value;
+      const agreementDate = document.getElementById('agreementDate').value;
+      const deliveryDate = document.getElementById('deliveryDate').value;
+      const terms = document.getElementById('terms').value.trim();
+      const fileInput = document.getElementById('buyerSignature');
+      const priceError = document.getElementById('priceError');
+      const agreementDateError = document.getElementById('agreementDateError');
+      const deliveryDateError = document.getElementById('deliveryDateError');
+      const signatureError = document.getElementById('signatureError');
+
+      // Reset error messages
+      priceError.style.display = 'none';
+      agreementDateError.style.display = 'none';
+      deliveryDateError.style.display = 'none';
+      signatureError.style.display = 'none';
+
+      // Validation
+      if (!buyerName || !farmerName || !crop || !terms) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      if (!price || parseFloat(price) <= 0) {
+        priceError.style.display = 'block';
+        return;
+      }
+
+      const today = new Date().toISOString().split('T')[0];
+      if (!agreementDate || agreementDate < today) {
+        agreementDateError.style.display = 'block';
+        return;
+      }
+
+      if (!deliveryDate || deliveryDate <= agreementDate) {
+        deliveryDateError.style.display = 'block';
+        return;
+      }
+
+      const file = fileInput.files[0];
+      if (!file) {
+        signatureError.style.display = 'block';
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        signatureError.textContent = 'Please upload a valid image file.';
+        signatureError.style.display = 'block';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function () {
+        const contract = {
+          contractNumber: `AGR${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
+          buyerName,
+          farmerName,
+          crop,
+          price,
+          agreementDate,
+          deliveryDate,
+          terms,
+          buyerSignature: reader.result
+        };
+        localStorage.setItem('contractData', JSON.stringify(contract));
+        alert('Contract data saved successfully! Redirecting to farmer review...');
+        window.location.href = 'farmer-review.html';
+      };
+      reader.onerror = function () {
+        alert('Error reading signature file. Please try again.');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Set min date for agreementDate to today
+    document.getElementById('agreementDate').min = new Date().toISOString().split('T')[0];
+  </script>
+</body>
+</html>

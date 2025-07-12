@@ -1,0 +1,345 @@
+/* Reset and base */
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Layout */
+.body {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+  flex-shrink: 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.sidebar .username {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #b2bec3;
+}
+
+.sidebar button {
+  background: #34495e;
+  color: white;
+  border: none;
+  padding: 12px;
+  text-align: left;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sidebar button:hover {
+  background: #3d5a73;
+}
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #2e7d32;
+  color: white;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+button:hover {
+  background-color: #388e3c;
+}
+
+/* Special buttons */
+.btn-secondary {
+  background-color: #0277bd;
+}
+
+.btn-secondary:hover {
+  background-color: #01579b;
+}
+
+.btn-danger {
+  background-color: #c62828;
+}
+
+.btn-danger:hover {
+  background-color: #b71c1c;
+}
+
+/* Main Content */
+.main {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+}
+
+/* Sections */
+.section {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.active-section {
+  display: block;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.stat {
+  flex: 1;
+  min-width: 200px;
+  background: linear-gradient(135deg, #e0f2f1, #ffffff);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat strong {
+  font-size: 24px;
+  color: #2e7d32;
+  display: block;
+  margin-top: 8px;
+}
+
+/* Optional: Add icon before stat text (if using icons) */
+.stat::before {
+  content: '📊';
+  font-size: 28px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Market Cards */
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  background: #f0f4f8;
+  padding: 15px;
+  border-radius: 8px;
+  width: 280px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background 0.3s ease;
+  border: 2px solid black;
+  font-size: larger;
+}
+
+.card:hover {
+  background: #e3f2fd;
+  transform: translateY(-4px);
+}
+
+input {
+  display: block;
+  margin-bottom: 16px;
+  padding: 12px 15px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+input:focus {
+  outline: none;
+  border-color: #2e7d32;
+  background: #ffffff;
+  box-shadow: 0 0 5px rgba(46, 125, 50, 0.4);
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* --- Notification Card UI --- */
+.notification-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-left: 5px solid #2e7d32;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.notification-card.unread {
+  background-color: #f1f8e9;
+  border-left-color: #43a047;
+}
+
+.notification-card.read {
+  opacity: 0.75;
+}
+
+.notification-card:hover {
+  transform: translateY(-3px);
+}
+
+.notification-card p {
+  margin: 0;
+  font-size: 16px;
+  flex: 1;
+}
+
+/* --- Notification Actions --- */
+.notification-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+  flex-shrink: 0;
+}
+
+.notification-actions button {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+.notification-actions .btn-secondary {
+  background-color: #1976d2;
+}
+
+.notification-actions .btn-secondary:hover {
+  background-color: #0d47a1;
+}
+
+.notification-actions .btn-success {
+  background-color: #43a047;
+}
+
+.notification-actions .btn-success:hover {
+  background-color: #2e7d32;
+}
+
+
+/* Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 300px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.3s ease;
+}
+
+.popup button {
+  margin-top: 1rem;
+  background-color: #c0392b;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #e74c3c;
+}
+
+/* Feedback */
+.error {
+  color: #c0392b;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+ .cropImage{
+  width: 250px;
+  height: 200px;
+  border:1px solid black;
+}
+.loading {
+  font-style: italic;
+  color: #666;
+  margin: 1rem 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

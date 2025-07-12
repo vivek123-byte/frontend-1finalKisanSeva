@@ -21,8 +21,8 @@ const FarmerPaymentPortal = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedApp, setSelectedApp] = useState(null);
 
-  const API_BASE_URL = "http://localhost:3000/api/v1";
-
+// At the top of your file, after imports
+const API_BASE_URL = import.meta.env.VITE_SERVER + "/api/v1";
   const UPI_APPS = [
     {
       id: "googlepay",

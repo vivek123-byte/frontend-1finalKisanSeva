@@ -28,7 +28,7 @@ function Home() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const API_KEY = "51d83528fa812a561d0a4071b365dcf8";
-  const API_BASE_URL = "http://localhost:3000/api/v1";
+const API_BASE_URL = `${import.meta.env.VITE_SERVER}/api/v1`;
 
   const handleLoginClick = () => {
     navigate("/login");

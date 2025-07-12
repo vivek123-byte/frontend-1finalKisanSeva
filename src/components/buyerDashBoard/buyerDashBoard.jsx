@@ -17,8 +17,8 @@ const BuyerDashboard = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const API_BASE_URL = "http://localhost:3000/api/v1";
-
+// At the top of your file, after imports
+const API_BASE_URL = import.meta.env.VITE_SERVER + "/api/v1";
   // Check token validity
   const checkToken = async () => {
     try {
@@ -158,7 +158,7 @@ const BuyerDashboard = () => {
 
   // Initialize Socket.IO connection for real-time notifications
   useEffect(() => {
-    const socket = io("http://localhost:3000", {
+    const socket = io("https://backend-finalkisanseva-2.onrender.com", {
       auth: { token: getCookie("chattu-token") },
     });
 

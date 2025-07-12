@@ -29,8 +29,8 @@ const ContractForm = () => {
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const API_BASE_URL = "http://localhost:3000/api/v1";
-
+// At the top of your file, after imports
+const API_BASE_URL = import.meta.env.VITE_SERVER + "/api/v1";
   // Check token validity
   const checkToken = async () => {
     try {

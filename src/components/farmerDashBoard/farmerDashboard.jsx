@@ -19,11 +19,11 @@ const FarmerDashboard = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_BASE_URL = "http://localhost:3000/api/v1";
-
+// At the top of your file, after imports
+const API_BASE_URL = import.meta.env.VITE_SERVER + "/api/v1";
   // Initialize Socket.IO connection for real-time notifications
   useEffect(() => {
-    const socket = io("http://localhost:3000", {
+    const socket = io("import.meta.env.VITE_SERVER", {
       auth: { token: getCookie("chattu-token") },
     });
 
